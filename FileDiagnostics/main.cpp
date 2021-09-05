@@ -1,9 +1,6 @@
 
 #include <iostream>
-#include <vector>
-#include <regex>
 #include "FileDiagnostics.h"
-
 
 #define Key 0
 
@@ -11,15 +8,14 @@ int main()
 {
 
 #if Key
-    aricanli::general::FileDiagnostics fd("log.txt");
-    fd.parseWithDelimiter('\n');
-    fd.searchbyKey("INFO","searchbyKey.txt");
+    aricanli::general::tools::FileDiagnostics fd("log.txt");
+    fd.writeOptions("searchbyKey", "txt", '\n');
+    fd.searchbyKey("INFO");
 #else
     aricanli::general::tools::FileDiagnostics fd("log.txt");
-    fd.parseWithDelimiter('\n');
-    fd.searchbyDateTime("19:40:00", "19:50:00","searchbyDate.txt");
+    fd.writeOptions("searchbyDate","txt");
+    fd.searchbyDateTime("19:40:00", "19:50:00");
 #endif
-    //
     
     return 0;
 }

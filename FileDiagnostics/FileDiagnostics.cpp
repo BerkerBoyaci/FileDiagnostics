@@ -65,15 +65,15 @@ namespace aricanli {
 					throw FileDiagonsticsException{ "Error in parseWithSize()" };
 
 			}
-			void FileDiagnostics::searchbyKey(const std::string& key, const std::string& path) {
+			void FileDiagnostics::searchbyKey(const std::string& key) {
 				std::vector<std::string> tmp;
 				for (const auto& vec : m_lineOfString) {
 					if (vec.find(key) != std::string::npos)
 						tmp.push_back(vec);
 				}
-				writeFile(path, tmp);
+				writeFile( tmp);
 			}
-			void FileDiagnostics::searchbyDateTime(const std::string& first, const std::string& end, const std::string& path) {
+			void FileDiagnostics::searchbyDateTime(const std::string& first, const std::string& end) {
 				std::vector<std::string> tmp;
 				std::regex rgx("\\d\\d:\\d\\d:\\d\\d");
 				std::smatch m;
@@ -86,16 +86,21 @@ namespace aricanli {
 							tmp.push_back(vec);
 					}
 				}
-				writeFile(path, tmp);
+				writeFile( tmp);
 			}
-			void FileDiagnostics::writeFile(const std::string& t_extensionName, const std::vector<std::string>& t_vecOfStr) {
-				std::string pathName = t_extensionName;
-				m_ofs.open(pathName, std::ios::out | std::ios::app);
+			void FileDiagnostics::writeFile( const std::vector<std::string>& t_vecOfStr) {
+				
+				m_ofs.open(m_extensionName, std::ios::out | std::ios::app);
 				for (int i = 0; i < t_vecOfStr.size(); i++) {
 					m_ofs.write(t_vecOfStr[i].c_str(), t_vecOfStr[i].size());
 					m_ofs << "\n";
 				}
 				m_ofs.close();
+			}
+			void FileDiagnostics::writeOptions(const std::string& pathName, const std::string& extensionName, char delim) {
+				parseWithDelimiter(delim);
+				m_extensionName = pathName +"." + extensionName;
+			
 			}
 			std::vector<std::string> FileDiagnostics::parseWithDelimiter(char t_delim) {
 				split(t_delim);

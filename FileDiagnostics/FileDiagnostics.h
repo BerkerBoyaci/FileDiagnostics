@@ -37,18 +37,20 @@ namespace aricanli {
 				virtual bool isOpen() const;
 				virtual int fileLength();
 
-				virtual void searchbyKey(const std::string&, const std::string&);
-				void searchbyDateTime(const std::string&, const std::string&, const std::string&);
+				void writeOptions(const std::string& , const std::string& , char delim = '\n');
+				virtual void searchbyKey(const std::string&);
+				void searchbyDateTime(const std::string&, const std::string&);
 				virtual void parseWithSize(size_t);
 				virtual std::vector<std::string> parseWithDelimiter(char delim);
 				virtual std::vector<std::string> getContests() const;
 			protected:
-				void writeFile(const std::string&, const std::vector<std::string>&);
+				void writeFile(const std::vector<std::string>&);
 				virtual void closeFile();
 				void split(char t_delim);
 				size_t stringSize() const;
 			private:
 				std::string m_lines;
+				std::string m_extensionName;
 				std::ifstream m_ifs;
 				std::ofstream m_ofs;
 				std::size_t m_fileLength;
